@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 
 import SearchInput from '../SearchInput/SearchInput';
+import SortSelector from '../SortSelector/SortSelector';
 
 import './App.css';
 
@@ -8,13 +9,13 @@ export default class App extends Component {
 	constructor() {
 		super();
 
-		this.timer = null;
-
-		this.state = {
+		this.searchPQueries = {
+			sort: 'movie',
 			query: '',
-			autoCompleteList: [],
-			autoCompleteListIndex: 0
+			year: '',
 		};
+
+		this.state = {};
 	}
 
 	render() {
@@ -22,12 +23,9 @@ export default class App extends Component {
 			<form onSubmit={(e) => {
 				e.preventDefault();
 			}} >
-				<select value="movie">
-					<option value="movie">movies</option>
-					<option value="tv">tv shows</option>
-				</select>
+				<SortSelector onSortSelect={(sort) => this.searchPQueries.sort = sort} />
 
-				<SearchInput />
+				<SearchInput onQueryChange={(query) => this.searchPQueries.query = query} />
 
 				<input type="number" placeholder="Release year" />
 

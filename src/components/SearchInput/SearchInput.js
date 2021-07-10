@@ -38,6 +38,8 @@ export default class SearchInput extends Component {
 
 					this.setState({query: e.target.value});
 
+					this.props.onQueryChange(e.target.value);
+
 					this.timer = setTimeout(() => this.autoCompleteHandler(e.target.value), 300);
 				}}
 
@@ -56,12 +58,16 @@ export default class SearchInput extends Component {
 								autoCompleteList: []
 							});
 						} else if (key === 'Enter' || key === 'Ent' || key === 13) {
+							const query = this.state.autoCompleteList[
+								this.state.autoCompleteListIndex
+							].name;
+
 							this.setState({
 								autoCompleteList: [],
-								query: this.state.autoCompleteList[
-									this.state.autoCompleteListIndex
-								].name
+								query: query
 							});
+
+							this.props.onQueryChange(query);
 						} else if (key === 'ArrowDown' || key === 'ArrowDown' || key === 40) {
 							let newIndex = this.state.autoCompleteListIndex + 1;
 
@@ -88,10 +94,16 @@ export default class SearchInput extends Component {
 					className={index === this.state.autoCompleteListIndex ? 'active' : ''}
 					key={item.id}
 					dangerouslySetInnerHTML={{__html: item.styledName}}
-					onClick={() => this.setState({
-						query: item.name,
-						autoCompleteList: []
-					})}
+					onClick={() => {
+						const query = item.name;
+
+						this.setState({
+							query: query,
+							autoCompleteList: []
+						});
+
+						this.props.onQueryChange(query);
+					}}
 				/>)}
 			</ul>}
 		</div>;
