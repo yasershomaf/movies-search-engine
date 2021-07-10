@@ -17,7 +17,7 @@ export default class SearchInput extends Component {
 		};
 	}
 
-	autoCompleteHandler = (query) => {
+	autoCompleteHandler = query => {
 		autoComplete(query).then(list => {
 			this.setState({
 				autoCompleteList: list,
@@ -43,13 +43,13 @@ export default class SearchInput extends Component {
 					this.timer = setTimeout(() => this.autoCompleteHandler(e.target.value), 300);
 				}}
 
-				onFocus={(e) => this.autoCompleteHandler(e.target.value)}
+				onFocus={e => this.autoCompleteHandler(e.target.value)}
 
 				onBlur={() => setTimeout(() => {
 					this.setState({autoCompleteList: []});
 				}, 50)}
 
-				onKeyUp={(e) => {
+				onKeyUp={e => {
 					if (this.state.autoCompleteList.length > 0) {
 						const key = e.key || e.keyCode;
 

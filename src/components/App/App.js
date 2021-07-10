@@ -9,7 +9,7 @@ export default class App extends Component {
 	constructor() {
 		super();
 
-		this.searchPQueries = {
+		this.searchQueries = {
 			sort: 'movie',
 			query: '',
 			year: '',
@@ -23,11 +23,11 @@ export default class App extends Component {
 			<form onSubmit={(e) => {
 				e.preventDefault();
 			}} >
-				<SortSelector onSortSelect={(sort) => this.searchPQueries.sort = sort} />
+				<SortSelector onSortSelect={sort => this.searchQueries.sort = sort} />
 
-				<SearchInput onQueryChange={(query) => this.searchPQueries.query = query} />
+				<SearchInput onQueryChange={query => this.searchQueries.query = query} />
 
-				<input type="number" placeholder="Release year" />
+				<ReleaseYear onYearSelect={year => this.searchQueries.year = year}/>
 
 				<button type="submit" >Search</button>
 			</form>
