@@ -5,6 +5,7 @@ import {getResults} from '../../services/api';
 import SearchInput from '../SearchInput/SearchInput';
 import SortSelector from '../SortSelector/SortSelector';
 import ReleaseYear from '../ReleaseYear/ReleaseYear';
+import Card from '../Card/Card';
 
 import './App.css';
 
@@ -43,9 +44,9 @@ export default class App extends Component {
 				<button type="submit" >Search</button>
 			</form>
 
-			<ul>
-				{this.state.results.map(card => <li key={card.id}>{card.title}</li>)}
-			</ul>
+			<div className="results-container">
+				{this.state.results.map(card => <Card key={card.id} details={card} />)}
+			</div>
 
 			<footer>pages</footer>
 		</>;
