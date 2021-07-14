@@ -6,6 +6,7 @@ import SearchInput from '../SearchInput/SearchInput';
 import SortSelector from '../SortSelector/SortSelector';
 import ReleaseYear from '../ReleaseYear/ReleaseYear';
 import Card from '../Card/Card';
+import Pagination from '../Pagination/Pagination';
 
 import './App.css';
 
@@ -20,8 +21,20 @@ export default class App extends Component {
 		};
 
 		this.state = {
-			results: []
+			results: [],
+			currentPage: 0,
+			noOfPages: 0
 		};
+	}
+
+	searchHandler = page => {
+		const {sort, query, year} = this.searchQueries;
+
+		getResults({sort, query, year , page}).then(data => this.setState({
+			results: data.results,
+			noOfPages: data.total_pages,
+			currentPage: data.page
+		}));
 	}
 
 	render() {
@@ -29,11 +42,7 @@ export default class App extends Component {
 			<form onSubmit={(e) => {
 				e.preventDefault();
 
-				const {sort, query, year} = this.searchQueries;
-
-				getResults({sort, query, year , page: 1}).then(data => this.setState({
-					results: data.results
-				}));
+				this.searchHandler(1);
 			}} >
 				<SortSelector onSortSelect={sort => this.searchQueries.sort = sort} />
 
@@ -44,11 +53,17 @@ export default class App extends Component {
 				<button type="submit" >Search</button>
 			</form>
 
-			<div className="results-container">
-				{this.state.results.map(card => <Card key={card.id} details={card} />)}
-			</div>
+			{this.state.results.length > 0 && <>
+				<div className="results-container">
+					{this.state.results.map(card => <Card key={card.id} details={card} />)}
+				</div>
 
-			<footer>pages</footer>
+				<Pagination
+					currentPage={this.state.currentPage}
+					noOfPages={this.state.noOfPages}
+					onSelect={this.searchHandler}
+				/>
+			</>}
 		</>;
 	}
 }

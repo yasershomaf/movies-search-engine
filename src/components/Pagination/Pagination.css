@@ -1,0 +1,30 @@
+.pagination {
+  margin: 0 0 20px 2.5vw;
+}
+
+.pagination button {
+  padding: 0 16px;
+  line-height: 32px;
+  font-size: 16px;
+  border-radius: 4px;
+  margin-right: 5px;
+  outline: none;
+}
+
+.pagination button:not([disabled]) {
+  border: 1px solid gray;
+  cursor: pointer;
+  color: dodgerblue;
+  background-color: white;
+}
+
+.pagination button[disabled] {
+  color: black;
+  font-weight: bold;
+  background-color: #f2f7fc;
+  border: 2px solid #0090e3;
+}
+
+.pagination span {
+  margin-right: 5px;
+}
